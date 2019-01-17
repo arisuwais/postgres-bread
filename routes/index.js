@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const moment = require('moment');
 
 module.exports = function (pool) {
 
@@ -58,9 +56,9 @@ module.exports = function (pool) {
       const pages = Math.ceil(total / limit);
       sql = `select * from bread`;
       if (isFilter) {
-        sql += ` where ${params.join(' and ')}`
+        sql += ` where ${params.join(' and ')} `
       }
-      sql += ` limit ${limit} offset ${offset}`;
+      sql += ` ORDER BY id ASC limit ${limit} offset ${offset} `;
       pool.query(sql, (err, data) => {
         res.render('index', {
           rows: data.rows,
